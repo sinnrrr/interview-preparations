@@ -34,6 +34,7 @@ class HashMapSolution:
         return []
 
 
+# O(log(N) + N)
 class TwoPointersSolution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         sorted_nums = sorted(nums)
