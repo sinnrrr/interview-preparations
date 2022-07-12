@@ -34,7 +34,7 @@ def compare_lists(l1: ListNode, l2: ListNode) -> bool:
     return True
 
 
-class Solution:
+class RecursiveSolution:
 
     def addTwoNumbers(self, l1: Optional[ListNode],
                       l2: Optional[ListNode]) -> Optional[ListNode]:
@@ -46,26 +46,50 @@ class Solution:
         def recurse(acc: ListNode, l1: ListNode, l2: ListNode, excess=0):
             excess, acc.val = divmod(l1.val + l2.val + excess, 10)
 
-            print(l1.next is None, l2.next is None, acc.val, excess,
-                  l1.next is None and l2.next is None and excess != 0)
-
             if l1.next is None and l2.next is None:
                 if excess != 0:
                     acc.next = ListNode(excess)
 
                 return
-            elif l1.next is None:
-                l1.next = ListNode()
-            elif l2.next is None:
-                l2.next = ListNode()
 
             acc.next = ListNode()
 
-            recurse(acc.next, l1.next, l2.next, excess)
+            recurse(acc.next, l1.next or ListNode(), l2.next or ListNode(),
+                    excess)
 
         recurse(l3, l1, l2)
 
         return l3
+
+
+class IterativeSolution:
+
+    def addTwoNumbers(self, l1: Optional[ListNode],
+                      l2: Optional[ListNode]) -> Optional[ListNode]:
+        if l1 is None or l2 is None:
+            return None
+
+        l3 = ListNode()
+        l1_temp, l2_temp, l3_temp = l1, l2, l3
+        excess = 0
+        while True:
+            excess, l3_temp.val = divmod(l1_temp.val + l2_temp.val + excess,
+                                         10)
+
+            if l1_temp.next is None and l2_temp.next is None:
+                if excess != 0:
+                    l3_temp = ListNode(excess)
+
+                break
+
+            l1_temp = l1.next or ListNode()
+            l2_temp = l2.next or ListNode()
+            l3_temp.next = ListNode()
+
+        return l3
+
+
+Solution = IterativeSolution
 
 
 @pytest.mark.parametrize(
