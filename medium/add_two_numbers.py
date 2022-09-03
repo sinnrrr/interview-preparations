@@ -33,6 +33,16 @@ def compare_lists(l1: ListNode, l2: ListNode) -> bool:
 
     return True
 
+def reverse_list(head):
+        prev = None
+        current = head
+        while(current is not None):
+            next = current.next
+            current.next = prev
+            prev = current
+            current = next
+        return prev
+
 
 class RecursiveSolution:
 
@@ -66,30 +76,33 @@ class IterativeSolution:
 
     def addTwoNumbers(self, l1: Optional[ListNode],
                       l2: Optional[ListNode]) -> Optional[ListNode]:
-        if l1 is None or l2 is None:
-            return None
+        carry = 0
+        header = temp = ListNode()
+        while l1 or l2 or carry:
+            if l1:
+                carry += l1.val
+                l1 = l1.next
+            if l2:
+                carry += l2.val
+                l2 = l2.next
 
-        l3 = ListNode()
-        l1_temp, l2_temp, l3_temp = l1, l2, l3
-        excess = 0
-        while True:
-            excess, l3_temp.val = divmod(l1_temp.val + l2_temp.val + excess,
-                                         10)
+            carry, val = divmod(carry, 10)
+            temp.next = ListNode(val)  # type: ignore
+            temp = temp.next
 
-            if l1_temp.next is None and l2_temp.next is None:
-                if excess != 0:
-                    l3_temp = ListNode(excess)
-
-                break
-
-            l1_temp = l1.next or ListNode()
-            l2_temp = l2.next or ListNode()
-            l3_temp.next = ListNode()
-
-        return l3
+        # just not to make obscure loop conditions
+        # we don't handle first element and just returning
+        # next one, because this is where loop starts to output results
+        return header.next
 
 
-Solution = IterativeSolution
+class DoublePointerSolution:
+
+    def addTwoNumbers(self, l1: Optional[ListNode],
+                      l2: Optional[ListNode]) -> Optional[ListNode]:
+
+
+Solution = DoublePointerSolution
 
 
 @pytest.mark.parametrize(
