@@ -3,9 +3,11 @@ name = "leetcode"
 version = "0.1.0"
 description = ""
 authors = [
-  "Dmytro Soltysiuk <dimasoltusyuk@gmail.com>", 
-  "Nikita Yasnogorodskyi <nikita@orca.security>"
+  "Dmytro Soltysiuk <dimasoltusyuk@gmail.com>",
+  "Nikita Yasnogorodskyi <nikita@orca.security>",
 ]
+
+[tool.pyright]
 
 [tool.poetry.dependencies]
 python = "3.10.5"
