@@ -13,32 +13,32 @@ import pytest
 
 
 def triplet_sum_close_to_target(arr: list[int], target_sum: int):
-    arr = sorted(arr)
-    n = len(arr)
-    closest_to_target = math.inf
+    arr.sort()
 
-    for i in range(n):
+    n = len(arr)
+    smallest_diff = math.inf
+
+    for i in range(n - 2):
         left, right = i + 1, n - 1
+        target_sum_comp = target_sum - arr[i]
 
         while left < right:
-            sum = arr[left] + arr[right] + arr[i]
+            target_diff = target_sum_comp - (arr[left] + arr[right])
 
-            sum_diff = abs(target_sum - sum)
-            closest_to_target_diff = abs(target_sum - closest_to_target)
+            if abs(target_diff) == abs(smallest_diff):
+                smallest_diff = max(smallest_diff, target_diff)
+            elif abs(target_diff) < abs(smallest_diff):
+                smallest_diff = target_diff
 
-            if sum_diff < closest_to_target_diff:
-                closest_to_target = sum
-
-            if sum == target_sum:
+            if target_diff == 0:
                 break
 
-            if sum > target_sum:
+            if target_diff > 0:
+                left += 1
+            else:
                 right -= 1
 
-            if sum < target_sum:
-                left += 1
-
-    return closest_to_target
+    return target_sum - smallest_diff
 
 
 @pytest.mark.parametrize(
@@ -48,6 +48,8 @@ def triplet_sum_close_to_target(arr: list[int], target_sum: int):
         ([-3, -1, 1, 2], 1, 0),
         ([1, 0, 1, 1], 100, 3),
         ([0, 1, 2], 3, 3),
+        ([-1, 2, 1, -4], 1, 2),
+        ([0, 1, 2, 3, 10], 10, 11),
     ],
 )
 def test_triplet_sum_close_to_target(arr, target_sum, expected):
