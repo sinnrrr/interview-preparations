@@ -20,7 +20,7 @@ def search_quadruplets(arr, target):
             continue
 
         for j in range(i + 1, n - 2):
-            if j > 0 and arr[j] == arr[j - 1]:
+            if j > i + 1 and arr[j] == arr[j - 1]:
                 continue
 
             lp, rp = j + 1, n - 1
@@ -96,8 +96,10 @@ def search_quadruplets_ducked(arr, target):
 @pytest.mark.parametrize(
     "arr, target, expected",
     [
-        ([4, 1, 2, -1, 1, -3], 1, [[-3, -1, 1, 4], [-3, 1, 1, 2]]),
-        ([2, 0, -1, 1, -2, 2], 2, [[-2, 0, 2, 2], [-1, 0, 1, 2]]),
+        # ([4, 1, 2, -1, 1, -3], 1, [[-3, -1, 1, 4], [-3, 1, 1, 2]]),
+        # ([2, 0, -1, 1, -2, 2], 2, [[-2, 0, 2, 2], [-1, 0, 1, 2]]),
+        # ([2, 2, 2, 2, 2], 8, [[2, 2, 2, 2]]),
+        ([-2, -1, -1, 1, 1, 2, 2], 0, [[-2, -1, 1, 2], [-1, -1, 1, 1]])
     ],
 )
 def test_search_quadruplets(arr, target, expected):
