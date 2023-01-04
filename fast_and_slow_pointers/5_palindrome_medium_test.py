@@ -8,7 +8,6 @@ The algorithm should have O(N) time complexity where ‘N’ is
 the number of nodes in the LinkedList.
 """
 
-from collections import defaultdict
 from typing import Optional
 
 
@@ -18,46 +17,42 @@ class Node:
         self.next = next
 
 
-def is_palindromic_linked_list(head: Optional[Node]):
-    ...
+def is_palindromic_linked_list(head: Optional["Node"]):
+    if head is None or head.next is None:
+        return True
 
-
-def is_palindromic_circular_linked_list(head: Optional[Node]):
-    if head is None:
-        return False
-
-    tail = None
-    fast = slow = head
-    value_freq_map, matched, list_len = defaultdict(int), 0, 0
-    while slow is not None:
-        list_len += 1
-
-        if fast.next is None:
-            """
-            linked list is even, meaning it could have a palindrome
-            we make it circular to continue comparing values
-            """
-            tail = fast
-            fast.next = head
-        elif fast is None or fast.next.next:
-            """
-            means this linked list is odd, so it could not be a palindrome
-            """
-            return False
-
-        value_freq_map[slow.value] += 1
-        if value_freq_map[slow.value] == 2:
-            matched += 1
-        if value_freq_map[fast.value] == 2:
-            matched += 1
-
-        slow = slow.next
+    slow = fast = head
+    while fast is not None and fast.next is not None:
+        slow = slow.next  # type: ignore
         fast = fast.next.next
 
-    return matched == list_len
+    head_second_half = reverse(slow)
+    copy_head_second_half = head_second_half
+    while head is not None and head_second_half is not None:
+        if head.value != head_second_half.value:
+            break  # for the second half to reverse at the end of the function
+        head = head.next
+        head_second_half = head_second_half.next
+
+    reverse(copy_head_second_half)
+
+    if head is None or head_second_half is None:
+        return True
+
+    return False
 
 
-def test():
+def reverse(head):
+    prev = None
+    while head is not None:
+        next = head.next
+        head.next = prev
+        prev = head
+        head = next
+    return prev
+
+
+def test_odd():
     head = Node(2)
     head.next = Node(4)
     head.next.next = Node(6)
@@ -70,3 +65,11 @@ def test():
 
     assert is_palindromic_linked_list(None) is True
     assert is_palindromic_linked_list(Node(1)) is True
+
+
+def test_even():
+    head = Node(2)
+    head.next = Node(4)
+    head.next.next = Node(4)
+    head.next.next.next = Node(2)
+    assert is_palindromic_linked_list(head) is True
