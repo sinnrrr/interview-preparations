@@ -15,7 +15,7 @@ class Node:
         self.next = next
 
 
-def find_middle_of_linked_list(head):
+def find_middle_of_linked_list(head) -> Node:
     slow = fast = head
     while fast and fast.next:
         slow = slow.next

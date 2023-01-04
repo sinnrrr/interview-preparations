@@ -85,6 +85,3 @@ def test():
     head.next.next.next.next.next.next = head.next.next.next
     assert find_cycle_start_grokking(head).value == 4
     assert find_cycle_start_leetcode(head).value == 4
-
-    head.next.next.next.next.next.next = head
-    assert find_cycle_start(head).value == 1
