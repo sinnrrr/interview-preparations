@@ -41,6 +41,6 @@ def merge_intervals(arr: list[list[int]]):
 
 
 def test_grokking():
-    # assert merge_intervals([[1, 4], [2, 5], [7, 9]]) == [[1, 5], [7, 9]]
+    assert merge_intervals([[1, 4], [2, 5], [7, 9]]) == [[1, 5], [7, 9]]
     assert merge_intervals([[6, 7], [2, 4], [5, 9]]) == [[2, 4], [5, 9]]
-    # assert merge_intervals([[1, 4], [2, 6], [3, 5]]) == [[1, 6]]
+    assert merge_intervals([[1, 4], [2, 6], [3, 5]]) == [[1, 6]]
