@@ -53,6 +53,31 @@ def interval_intersection(
     return res
 
 
+# leetcode more elegant solution
+def intervalIntersection(
+    arr1: list[list[int]], arr2: list[list[int]]
+) -> list[list[int]]:
+    if arr1 == [] or arr2 == []:
+        return []
+
+    res = []
+    i, j = 0, 0
+
+    while i < len(arr1) and j < len(arr2):
+        start = max(arr1[i][0], arr2[j][0])
+        end = min(arr1[i][1], arr2[j][1])
+
+        if start <= end:
+            res.append([start, end])
+
+        if arr1[i][1] < arr2[j][1]:
+            i += 1
+        else:
+            j += 1
+
+    return res
+
+
 def test_grokking():
     fn = interval_intersection
 
