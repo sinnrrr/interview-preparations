@@ -25,6 +25,8 @@ Explanation: All employess are free between [5,7].
 """
 
 
+from __future__ import annotations
+
 import pytest
 
 
@@ -35,6 +37,9 @@ class Interval:
 
     def print_interval(self):
         print("[" + str(self.start) + ", " + str(self.end) + "]", end="")
+
+    def __eq__(self, other: Interval) -> bool:
+        return self.start == other.start and self.end == other.end
 
 
 def find_employee_free_time_failed(schedule: list[list[Interval]]):
