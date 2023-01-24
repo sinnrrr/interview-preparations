@@ -16,8 +16,13 @@ class Node:
         self.value = value
         self.next = next
 
-    def __eq__(self, other: Node) -> bool:
-        return self.value == other.value
+    def __eq__(self, other) -> bool:
+        while self and other and self.value == other.value:
+            self = self.next
+            other = other.next
+        if not self and not other:
+            return True
+        return False
 
 
 # elegant leetcode solution
@@ -35,8 +40,10 @@ def reverse_sub_list_leetcode(head: Node, left: int, right: int) -> Node:
 
     # reverse
     for _ in range(right - left):
+        # we use curr.next as we should start from prev.next
         temp = curr.next  # type: ignore
         curr.next = temp.next  # type: ignore
+
         temp.next = prev.next  # type: ignore
         prev.next = temp  # type: ignore
 
