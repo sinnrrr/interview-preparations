@@ -57,6 +57,28 @@ def count_paths(root: Optional[TreeNode], target_sum: int) -> int:
     return ans
 
 
+def count_paths_leetcode(root: Optional[TreeNode], target_sum: int) -> int:
+    if not root:
+        return 0
+
+    stack = [(root, [root.val])]
+    num = 0
+
+    while stack:
+        node, totals = stack.pop()
+        num += totals.count(target_sum)
+
+        if node.left:
+            stack.append(
+                (node.left, [x + node.left.val for x in totals] + [node.left.val])
+            )
+        if node.right:
+            stack.append(
+                (node.right, [x + node.right.val for x in totals] + [node.right.val])
+            )
+    return num
+
+
 @pytest.mark.parametrize(
     "root, S, expected",
     [
