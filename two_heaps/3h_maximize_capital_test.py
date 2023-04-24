@@ -28,13 +28,19 @@ Explanation:
 2. Next, we will select the second project, which will bring our capital to 3.
 3. Next, we will select the fourth project, giving us a profit of 5.
 After selecting the three projects, our total capital will be 8 (1+2+5).
+
+https://leetcode.com/problems/ipo/solutions/3219920/heap-greedy-solution-beats-99-69-python-3
 """
 
+
+from heapq import heappop, heappush
 
 import pytest
 
 
-def smart_invest(capitals: list[int], profits: list[int], capital: int, nproj: int):
+def smart_invest_custom(
+    capitals: list[int], profits: list[int], capital: int, nproj: int
+) -> int:
     projects = list(zip(capitals, profits))
 
     while len(projects) > 0 and nproj > 0:
@@ -59,6 +65,27 @@ def smart_invest(capitals: list[int], profits: list[int], capital: int, nproj: i
     return capital
 
 
+def smart_invest(capitals, profits, initial_capital, num_projects):
+    max_heap = []
+    min_heap = []
+
+    for i in range(len(capitals)):
+        heappush(min_heap, (capitals[i], i))
+
+    available_capital = initial_capital
+    for _ in range(num_projects):
+        while min_heap and min_heap[0][0] <= available_capital:
+            _, i = heappop(min_heap)
+            heappush(max_heap, (-profits[i], i))
+
+        if not max_heap:
+            break
+
+        available_capital += -heappop(max_heap)[0]
+
+    return available_capital
+
+
 @pytest.mark.parametrize(
     "capitals, profits, capital, nproj, expected",
     [
@@ -68,6 +95,7 @@ def smart_invest(capitals: list[int], profits: list[int], capital: int, nproj: i
 )
 def test_grokking(capitals, profits, capital, nproj, expected):
     assert smart_invest(capitals, profits, capital, nproj) == expected
+    assert smart_invest_custom(capitals, profits, capital, nproj) == expected
 
 
 @pytest.mark.parametrize(
@@ -79,3 +107,4 @@ def test_grokking(capitals, profits, capital, nproj, expected):
 )
 def test_leetcode(capitals, profits, capital, nproj, expected):
     assert smart_invest(capitals, profits, capital, nproj) == expected
+    assert smart_invest_custom(capitals, profits, capital, nproj) == expected
