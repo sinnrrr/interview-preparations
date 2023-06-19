@@ -1,10 +1,8 @@
 [tool.poetry]
-name = "grokking"
+name = "interview-preparations"
 version = "0.1.0"
 description = ""
 authors = ["Dmytro Soltysiuk <dimasoltusyuk@gmail.com>"]
-
-[tool.pyright]
 
 [tool.poetry.dependencies]
 python = "3.10.7"
@@ -18,4 +16,3 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.isort]
 profile = "black"
-
