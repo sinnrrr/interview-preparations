@@ -5,7 +5,7 @@ description = ""
 authors = ["Dmytro Soltysiuk <dimasoltusyuk@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "3.10.7"
+python = "3.11.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
