@@ -44,3 +44,4 @@ def heap_solution(a: list[int], b: list[int], m: int):
 )
 def test_solution(a, b, m, expected):
     assert solution(a, b, m) == expected
+    assert heap_solution(a, b, m) == expected
