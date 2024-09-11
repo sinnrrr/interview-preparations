@@ -34,7 +34,7 @@ class HashMapSolution:
         return []
 
 
-# O(log(N) + N)
+# O(N * log(N))
 class TwoPointersSolution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         sorted_nums = sorted(nums)
@@ -53,10 +53,12 @@ class TwoPointersSolution:
                 elif temp_sum < target:
                     left += 1
                 else:
-                    return [nums.index(left_value),
-                            nums.index(right_value, left + 1)
-                            if left_value == right_value
-                            else nums.index(right_value)]
+                    return [
+                        nums.index(left_value),
+                        nums.index(right_value, left + 1)
+                        if left_value == right_value
+                        else nums.index(right_value),
+                    ]
 
         return []
 
